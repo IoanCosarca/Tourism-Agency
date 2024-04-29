@@ -1,0 +1,49 @@
+<mat-toolbar color="primary" class="custom-toolbar" role="navigation">
+	<div class="logo-container">
+		<div class="logo-wrapper">
+			<img src="assets/Logo.png" alt="Expedition Hub Logo" class="logo">
+		</div>
+		<div class="site-name">Expedition Hub</div>
+	</div>
+	<div class="spacer">
+		<div class="search-bar">
+			<mat-icon matPrefix class="mat-icon" (click)="searchDestinations(searchQuery)">search</mat-icon>
+			<div class="input-container">
+				<input matInput placeholder="Search Location..." class="input-label" [(ngModel)]="searchQuery"
+					(keydown.enter)="searchDestinations(searchQuery)">
+			</div>
+			<button mat-icon-button class="clear-button" (click)="clearSearch()">
+				<mat-icon>clear</mat-icon>
+			</button>
+		</div>
+	</div>
+	<div class="buttons-container">
+		<button mat-button routerLink="/" class="nav-button">Home</button>
+
+		<mat-menu #destinationsMenu="matMenu" class="menu-dropdown">
+			<button mat-menu-item routerLink="/Destinations" class="menu-item">Destinations</button>
+			<button mat-menu-item routerLink="/Destinations" class="menu-item"
+				(click)="scrollTo('AvailableOffers')">Available Offers</button>
+		</mat-menu>
+
+		<button mat-button [matMenuTriggerFor]="destinationsMenu" class="nav-button">
+			Destinations
+			<mat-icon>arrow_drop_down</mat-icon>
+		</button>
+
+		<button mat-button routerLink="/Contact" class="nav-button">Contact</button>
+
+		<button mat-button *ngIf="isLoggedIn() && isAgent()" routerLink="/Admin" class="nav-button">Admin</button>
+
+		<button mat-button *ngIf="isLoggedIn() && isAgent()" routerLink="/Reservations"
+			class="nav-button">Reservations</button>
+
+		<button mat-button *ngIf="!isLoggedIn()" routerLink="/Login" class="nav-button">Log In</button>
+
+		<button mat-button *ngIf="isLoggedIn()" (click)="logout()" class="nav-button">Log Out</button>
+	</div>
+</mat-toolbar>
+
+<main [@routeAnimations]="prepareRoute(outlet)">
+	<router-outlet #outlet="outlet"></router-outlet>
+</main>

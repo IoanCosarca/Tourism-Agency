@@ -1,0 +1,92 @@
+<div class="edit-destination-container">
+	<mat-card *ngFor="let destination of destinations; let i = index" class="destination-card">
+		<mat-card-header>
+			<div class="title">
+				<mat-card-title> {{destination.name }}</mat-card-title>
+			</div>
+			<div mat-card-avatar class="delete">
+				<mat-icon class="delete-icon" (click)="deleteDestination(destination.name, i)">delete</mat-icon>
+			</div>
+		</mat-card-header>
+
+		<div class="card-content">
+			<div class="field">
+				<label>Location:</label>
+				<div class="value" *ngIf="!editLocation || editLocationIndex !== i; else editLocationTemplate">
+					{{ destination.location }}
+				</div>
+				<ng-template #editLocationTemplate>
+					<input [(ngModel)]="destination.location" type="text">
+					<div class="btn-group">
+						<button class="btn-save" (click)="saveEdit('location')">Save</button>
+						<button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+					</div>
+				</ng-template>
+				<mat-icon class="edit-icon" *ngIf="!editLocation || editLocationIndex !== i" (click)="enableEdit('location', i)">edit</mat-icon>
+			</div>
+
+			<img [src]="'http://localhost:8000/' + destination.image" class="destination-image">
+
+			<div class="field">
+				<label>Description:</label>
+				<div class="value" *ngIf="!editDescription || editDescriptionIndex !== i; else editDescriptionTemplate">
+					<p>{{ destination.description }}</p>
+				</div>
+				<ng-template #editDescriptionTemplate>
+					<textarea [(ngModel)]="destination.description"></textarea>
+					<div class="btn-group">
+						<button class="btn-save" (click)="saveEdit('description')">Save</button>
+						<button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+					</div>
+				</ng-template>
+				<mat-icon class="edit-icon" *ngIf="!editDescription || editDescriptionIndex !== i" (click)="enableEdit('description', i)">edit</mat-icon>
+			</div>
+
+			<div class="field">
+				<label>Price/Night:</label>
+				<div class="value" *ngIf="!editPriceNight || editPriceNightIndex !== i; else editPriceNightTemplate">
+					${{ destination.pricePerNight }}
+				</div>
+				<ng-template #editPriceNightTemplate>
+					<input [(ngModel)]="destination.pricePerNight" type="text">
+					<div class="btn-group">
+						<button class="btn-save" (click)="saveEdit('priceNight')">Save</button>
+						<button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+					</div>
+				</ng-template>
+				<mat-icon class="edit-icon" *ngIf="!editPriceNight || editPriceNightIndex !== i" (click)="enableEdit('priceNight', i)">edit</mat-icon>
+			</div>
+
+			<div class="field">
+				<label>Spots:</label>
+				<div class="value" *ngIf="!editSpots || editSpotsIndex !== i; else editSpotsTemplate">
+					{{ destination.spots }}
+				</div>
+				<ng-template #editSpotsTemplate>
+					<input [(ngModel)]="destination.spots" type="text">
+					<div class="btn-group">
+						<button class="btn-save" (click)="saveEdit('spots')">Save</button>
+						<button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+					</div>
+				</ng-template>
+				<mat-icon class="edit-icon" *ngIf="!editSpots || editSpotsIndex !== i" (click)="enableEdit('spots', i)">edit</mat-icon>
+			</div>
+
+			<div class="field">
+				<label>Discount:</label>
+				<div class="value"
+					*ngIf="!editDiscountPercent || editDiscountPercentIndex !== i; else editDiscountPercentTemplate">
+					{{destination.discount }}%
+				</div>
+				<ng-template #editDiscountPercentTemplate>
+					<input [(ngModel)]="destination.discount" type="text">
+					<div class="btn-group">
+						<button class="btn-save" (click)="saveEdit('discountPercent')">Save</button>
+						<button class="btn-cancel" (click)="cancelEdit()">Cancel</button>
+					</div>
+				</ng-template>
+				<mat-icon class="edit-icon" *ngIf="!editDiscountPercent || editDiscountPercentIndex !== i" (click)="enableEdit('discountPercent', i)">edit</mat-icon>
+			</div>
+		</div>
+	</mat-card>
+</div>

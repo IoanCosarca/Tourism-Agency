@@ -1,0 +1,13 @@
+<div class="wrapper">
+	<section class="hero-section">
+		<div class="hero-content">
+			<h1 class="hero-title">Discover Expedition Hub</h1>
+			<p class="hero-subtitle">Where Will You Go Next?</p>
+			<button mat-button color="accent" class="action-button" (click)="redirectToDestinations()">Book Now</button>
+		</div>
+	</section>
+
+	<section class="carousel-section">
+		<app-carousel [images]="images" [autoSlide]="true"></app-carousel>
+	</section>
+</div>

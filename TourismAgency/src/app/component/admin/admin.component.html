@@ -1,0 +1,15 @@
+<div class="admin-body">
+	<button mat-button color="black" fontsize="20px" (click)="toggleDestinations()">
+		Destinations
+	</button>
+	<button mat-button color="black" fontsize="20px" (click)="toggleAddDestination()">
+		Add Destination
+	</button>
+
+	<div *ngIf="page == 0" class="wrapper">
+		<app-edit-destination />
+	</div>
+	<div *ngIf="page == 1" class="wrapper">
+		<app-add-destination />
+	</div>
+</div>

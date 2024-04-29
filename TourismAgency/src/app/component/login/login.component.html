@@ -1,0 +1,28 @@
+<div class="wrapper">
+	<section class="login-section">
+		<h2 class="form-title">Log In</h2>
+		<form class="login-form" (ngSubmit)="login()" name="loginForm" [formGroup]="loginForm">
+			<mat-form-field class="form-field">
+				<input matInput placeholder="Email" formControlName="email">
+				<mat-error *ngIf="email?.invalid && (email?.dirty || email?.touched)">
+					<span *ngIf="email?.errors?.['required']">Email is required</span>
+					<span *ngIf="email?.errors?.['email']">Please enter a valid email address</span>
+				</mat-error>
+			</mat-form-field>
+
+			<mat-form-field class="form-field">
+				<input matInput placeholder="Password" [type]="hide ? 'password' : 'text'" formControlName="password">
+				<mat-icon matSuffix (click)="hide = !hide">{{ hide ? 'visibility_off' : 'visibility' }}</mat-icon>
+				<mat-error *ngIf="password?.invalid && (password?.dirty || password?.touched)">
+					<span *ngIf="password?.errors?.['required']">Password is required</span>
+				</mat-error>
+			</mat-form-field>
+
+			<button mat-raised-button color="primary" type="submit">Log In</button>
+			<button mat-button color="primary" (click)="redirectToRegister()">Register</button>
+		</form>
+		<div *ngIf="loginFailed" class="error-message">
+			Login failed. Please check your email and password and try again.
+		</div>
+	</section>
+</div>

@@ -1,0 +1,64 @@
+<div class="wrapper">
+	<form class="add-destination-container" (ngSubmit)="submitForm()" [formGroup]="destinationForm">
+		<mat-form-field class="form-group">
+			<mat-label>Name:</mat-label>
+			<input matInput type="text" formControlName="name" required>
+			<mat-error *ngIf="destinationForm.get('name')?.invalid && destinationForm.get('name')?.touched">
+				Name is required
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field class="form-group">
+			<mat-label>Location:</mat-label>
+			<input matInput type="text" formControlName="location" required>
+			<mat-error *ngIf="destinationForm.get('location')?.invalid && destinationForm.get('location')?.touched">
+				Location is required
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field class="form-group">
+			<mat-label>Description:</mat-label>
+			<textarea matInput formControlName="description" required></textarea>
+			<mat-error
+				*ngIf="destinationForm.get('description')?.invalid && destinationForm.get('description')?.touched">
+				Description is required
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field class="form-group">
+			<mat-label>Price per Night:</mat-label>
+			<input matInput type="number" formControlName="pricePerNight" required>
+			<mat-error
+				*ngIf="destinationForm.get('pricePerNight')?.invalid && destinationForm.get('pricePerNight')?.touched">
+				Price per Night is required
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field class="form-group">
+			<mat-label>Spots (Available Reservations):</mat-label>
+			<input matInput type="number" formControlName="spots" required>
+			<mat-error *ngIf="destinationForm.get('spots')?.invalid && destinationForm.get('spots')?.touched">
+				Number of spots are required
+			</mat-error>
+		</mat-form-field>
+
+		<mat-form-field class="form-group">
+			<mat-label>Discount:</mat-label>
+			<input matInput type="number" formControlName="discount">
+		</mat-form-field>
+
+		<div class="image-upload" (click)="fileInput.click()">
+			<input #fileInput type="file" formControlName="image" id="imageUpload" accept="image/*"
+				(change)="onFileSelected($event)" required>
+			<img *ngIf="imageUrl" [src]="imageUrl" alt="Uploaded Image" class="uploaded-image">
+			<span *ngIf="!imageUrl">Browse Image</span>
+		</div>
+		<mat-error *ngIf="destinationForm.get('image')?.invalid && destinationForm.get('image')?.touched">
+			Image is required
+		</mat-error>
+
+		<button mat-raised-button color="primary" type="submit">
+			Add Destination
+		</button>
+	</form>
+</div>

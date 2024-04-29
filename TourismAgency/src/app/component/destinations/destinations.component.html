@@ -1,0 +1,120 @@
+<section class="intro-section">
+	<div class="intro-background">
+		<h1 class="intro-title">When do you want to take your vacation?</h1>
+
+		<mat-form-field>
+			<mat-label>Select a date range</mat-label>
+			<mat-date-range-input [formGroup]="dateRangeForm" [rangePicker]="dateRangePicker">
+				<input matStartDate formControlName="start" placeholder="Start date">
+				<input matEndDate formControlName="end" placeholder="End date">
+			</mat-date-range-input>
+			<mat-datepicker-toggle matSuffix [for]="dateRangePicker"></mat-datepicker-toggle>
+			<mat-date-range-picker #dateRangePicker></mat-date-range-picker>
+
+			<mat-error *ngIf="dateRangeForm.controls.start.hasError('matStartDateInvalid')">
+				Invalid start date
+			</mat-error>
+			<mat-error *ngIf="dateRangeForm.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+		</mat-form-field>
+	</div>
+</section>
+
+<section class="destinations-section">
+	<div class="destinations-content">
+		<h2 class="mat-display-2">Explore Our Destinations</h2>
+		<div class="destinations-list">
+			<mat-card *ngFor="let destination of destinationsWithoutDiscount" class="destination-card">
+				<mat-card-header>
+					<div mat-card-avatar class="destination-avatar"></div>
+					<div class="details-container">
+						<mat-card-title>{{ destination.name }}</mat-card-title>
+						<mat-card-subtitle>{{ destination.location }}</mat-card-subtitle>
+					</div>
+				</mat-card-header>
+
+				<img [src]="'http://localhost:8000/' + destination.image">
+
+				<mat-card-content>
+					<div class="fields-container">
+						<div class="description-container">
+							<p>{{ destination.description }}</p>
+						</div>
+						<div class="destination-actions">
+							<div class="detail-item">
+								<div class="detail-label"><strong>Price/Night:</strong></div>
+								<div class="detail-value">${{ destination.pricePerNight }}</div>
+							</div>
+							<div class="detail-item">
+								<div class="detail-label"><strong>Spots:</strong></div>
+								<div class="detail-value">{{ destination.spots }}</div>
+							</div>
+						</div>
+					</div>
+				</mat-card-content>
+
+				<mat-card-actions class="book" *ngIf="currentUser">
+					<button mat-button class="book-button" (click)="makeReservation(destination)"
+						[disabled]="destination.spots === 0">
+						<ng-container *ngIf="destination.spots !== 0; else soldOutText">Make Reservation</ng-container>
+						<ng-template #soldOutText>
+							<span style="color: red; text-transform: uppercase;">SOLD OUT</span>
+						</ng-template>
+					</button>
+				</mat-card-actions>
+			</mat-card>
+		</div>
+	</div>
+</section>
+
+<section id="AvailableOffers" class="offers-section">
+	<div class="offers-content">
+		<h2 class="mat-display-2">Available Offers</h2>
+		<div class="offers-list">
+			<mat-card *ngFor="let destination of destinationsWithDiscount" class="offer-card">
+				<mat-card-header>
+					<div mat-card-avatar class="offer-avatar"></div>
+					<div class="details-container">
+						<mat-card-title>{{ destination.name }}</mat-card-title>
+						<mat-card-subtitle>{{ destination.location }}</mat-card-subtitle>
+					</div>
+				</mat-card-header>
+
+				<img [src]="'http://localhost:8000/' + destination.image">
+
+				<mat-card-content>
+					<div class="fields-container">
+						<div class="description-container">
+							<p>{{ destination.description }}</p>
+						</div>
+						<div class="offer-actions">
+							<div class="detail-item">
+								<div class="detail-label"><strong>Price/Night:</strong></div>
+								<div class="original-price">${{ destination.pricePerNight }}</div>
+								<div class="discounted-price">${{ calculateDiscountedPrice(destination.pricePerNight,
+									destination.discount) }}</div>
+							</div>
+							<div class="detail-item">
+								<div class="detail-label"><strong>Spots:</strong></div>
+								<div class="detail-value">{{ destination.spots }}</div>
+							</div>
+							<div class="detail-item">
+								<div class="detail-label"><strong>Discount:</strong></div>
+								<div class="detail-value">{{ destination.discount }}%</div>
+							</div>
+						</div>
+					</div>
+				</mat-card-content>
+
+				<mat-card-actions class="book" *ngIf="currentUser">
+					<button mat-button class="book-button" (click)="makeReservation(destination)"
+						[disabled]="destination.spots === 0">
+						<ng-container *ngIf="destination.spots !== 0; else soldOutText">Make Reservation</ng-container>
+						<ng-template #soldOutText>
+							<span style="color: red; text-transform: uppercase;">SOLD OUT</span>
+						</ng-template>
+					</button>
+				</mat-card-actions>
+			</mat-card>
+		</div>
+	</div>
+</section>
